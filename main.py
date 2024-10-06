@@ -5,13 +5,11 @@ from pydantic import BaseModel
 from database import SessionLocal, engine, Base
 import models
 
-# Create the database tables if they don't exist
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
 
-# Pydantic schema for validation
 class QuoteSchema(BaseModel):
     quote: str
     season: int
@@ -22,7 +20,6 @@ class QuoteSchema(BaseModel):
         orm_mode = True
 
 
-# Dependency to get the database session
 def get_db():
     db = SessionLocal()
     try:
