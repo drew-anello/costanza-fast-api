@@ -13,7 +13,6 @@ app = FastAPI()
 
 # Pydantic schema for validation
 class QuoteSchema(BaseModel):
-    id: int
     quote: str
     season: int
     episode: int
@@ -32,13 +31,13 @@ def get_db():
         db.close()
 
 
-@app.get("/quotes/", response_model=list[QuoteSchema])
+@app.get("/getquotes/", response_model=list[QuoteSchema])
 def read_quotes(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     quotes = db.query(models.Quote).offset(skip).limit(limit).all()
     return quotes
 
 
-@app.post("/quotes/", response_model=QuoteSchema)
+@app.post("/createquotes/", response_model=QuoteSchema)
 def create_quote(quote: QuoteSchema, db: Session = Depends(get_db)):
     db_quote = models.Quote(**quote.dict())
     db.add(db_quote)
