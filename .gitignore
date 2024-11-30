@@ -1,2 +1,6 @@
 .env*
 .env.local
+__pycache__/
+deployment-package.zip
+*.pyc
+venv/
