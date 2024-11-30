@@ -19,3 +19,10 @@
     cached_dirs:
     - "/root/.cache/pip"
     shell: "BASH"
+  - action: "Deploy function costanzaapi"
+    type: "AWS_LAMBDA_DEPLOY"
+    region: "us-east-1"
+    integration: "Amazon_Web_Services"
+    deployment_excludes:
+    - ".git"
+    function_name: "costanzaapi"
