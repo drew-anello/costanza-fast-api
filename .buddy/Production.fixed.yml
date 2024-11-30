@@ -5,3 +5,17 @@
     - "master"
   fail_on_prepare_env_warning: true
   resources: "NANO"
+  actions:
+  - action: "cd package && zip -r ../deployment-package.zip ."
+    type: "BUILD"
+    docker_image_name: "library/python"
+    docker_image_tag: "3.13"
+    execute_commands:
+    - "mkdir -p package"
+    - "pip install -r requirements.txt -t package/"
+    - "cp app.py secrets_manager.py package/"
+    - "cd package && zip -r ../deployment-package.zip ."
+    - ""
+    cached_dirs:
+    - "/root/.cache/pip"
+    shell: "BASH"
