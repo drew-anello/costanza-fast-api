@@ -1,0 +1,7 @@
+- pipeline: "Production"
+  events:
+  - type: "PULL_REQUEST"
+    branches:
+    - "master"
+  fail_on_prepare_env_warning: true
+  resources: "NANO"
