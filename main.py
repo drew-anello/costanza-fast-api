@@ -1,13 +1,16 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
-
+from mangum import Mangum
 from database import SessionLocal, engine, Base
 import models
+from typing import List
+from fastapi.responses import RedirectResponse
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+handler = Mangum(app)
 
 
 class QuoteSchema(BaseModel):
@@ -26,6 +29,11 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+@app.get("/")
+def read_root():
+    return RedirectResponse(url="/getquotes/")
 
 
 @app.get("/getquotes/", response_model=list[QuoteSchema])
