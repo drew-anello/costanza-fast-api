@@ -5,6 +5,9 @@ on:
     branches:
       - master  # Trigger on pushes to the 'master' branch
 
+permissions:
+  id-token: write # This is required for requesting the JWT
+
 jobs:
   build-and-push:
     name: Build and Push Docker Image to ECR
@@ -19,12 +22,12 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v3
       with:
-        role-to-assume: arn:aws:iam::265842400786:role/gha-new
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        role-to-assume: arn:aws:iam::265842400786:role/costanza-gha
+        # role-to-assume: arn:aws:iam::265842400786:role/gha-new
+      
         aws-region: us-east-1 # AWS Region for the resources
 
-        
+
     # Step 3: Log in to Amazon ECR
     - name: Log in to Amazon ECR
       id: login-ecr
