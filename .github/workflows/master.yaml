@@ -1,58 +1,41 @@
-# name: Build and Push to ECR
-
-# on:
-#   push:
-#     branches:
-#       - master 
-# jobs:
-#   build-and-push:
-#     name: Build and Push Docker Image to ECR
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Checkout Code
-#         uses: actions/checkout@v3
-
-#     - name: Log in to Amazon ECR
-#       id: login-ecr
-#       uses: aws-actions/amazon-ecr-login@v2
-#       with:
-#         region: us-east-1
-    
-#     - name: Build, Tag, and Push
-#       env:
-#         REPOSITORY_URI: 265842400786.dkr.ecr.us-east-1.amazonaws.com/costanza-fast-api-backend
-#         IMAGE_TAG: latest
-#       run: |
-#         docker build -t $REPOSITORY_URI:$IMAGE_TAG .
-#         docker push $REPOSITORY_URI:$IMAGE_TAG
-
-
-# name: Build and Push to ECR
+name: Build and Push to ECR
 
 on:
-    push:
-        branches:
-            - master 
+  push:
+    branches:
+      - master  # Trigger on pushes to the 'master' branch
+
 jobs:
-    build-and-push:
-        name: Build and Push Docker Image to ECR
-        runs-on: ubuntu-latest
+  build-and-push:
+    name: Build and Push Docker Image to ECR
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout Code
-              uses: actions/checkout@v3
+    steps:
+    # Step 1: Checkout the Code
+    - name: Checkout Code
+      uses: actions/checkout@v3
 
-            - name: Log in to Amazon ECR
-              id: login-ecr
-              uses: aws-actions/amazon-ecr-login@v2.0.1
+    # Step 2: Configure AWS Credentials
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v3
+      with:
+        role-to-assume: ${{ secrets.AWS_ARN }} # ARN of the role to assume
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1 # AWS Region for the resources
 
-            
+    # Step 3: Log in to Amazon ECR
+    - name: Log in to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+      with:
+        region: us-east-1
 
-            - name: Build, Tag, and Push
-              env:
-                  REPOSITORY_URI: 265842400786.dkr.ecr.us-east-1.amazonaws.com/costanza-fast-api-backend
-                  IMAGE_TAG: latest
-              run: |
-                  docker build -t $REPOSITORY_URI:$IMAGE_TAG .
-                  docker push $REPOSITORY_URI:$IMAGE_TAG
+    # Step 4: Build, Tag, and Push Docker Image
+    - name: Build, Tag, and Push Docker Image
+      env:
+        REPOSITORY_URI: 265842400786.dkr.ecr.us-east-1.amazonaws.com/costanza-fast-api-backend
+        IMAGE_TAG: latest
+      run: |
+        docker build -t $REPOSITORY_URI:$IMAGE_TAG .
+        docker push $REPOSITORY_URI:$IMAGE_TAG
