@@ -46,10 +46,6 @@ jobs:
             - name: Log in to Amazon ECR
               id: login-ecr
               uses: aws-actions/amazon-ecr-login@v2
-              with:
-                  registry: 265842400786.dkr.ecr.us-east-1.amazonaws.com
-                  username: ${{ secrets.AWS_ACCESS_KEY_ID }}
-                  password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
             - name: Build, Tag, and Push
               env:
