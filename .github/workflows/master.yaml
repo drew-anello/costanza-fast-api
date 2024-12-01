@@ -28,7 +28,6 @@ jobs:
         aws-region: us-east-1 # AWS Region for the resources
 
 
-        
     # Step 3: Log in to Amazon ECR
     - name: Log in to Amazon ECR
       id: login-ecr
