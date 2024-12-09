@@ -44,6 +44,11 @@ jobs:
         role-to-assume: arn:aws:iam::265842400786:role/costanza-gha      
         aws-region: us-east-1
 
+    - name: Update Lambda Function Configuration
+      run: |
+        aws lambda update-function-configuration --function-name arn:aws:lambda:us-east-1:265842400786:function:costanza-api \
+            --package-type Image
+
     - name: Deploy to Lambda Function
       env:
         REPOSITORY_URI: 265842400786.dkr.ecr.us-east-1.amazonaws.com/costanza-fast-api-backend
