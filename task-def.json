@@ -1,7 +1,8 @@
 {
     "family": "costanza-task-def",
     "networkMode": "awsvpc",
-    "taskRoleArn": "arn:aws:iam::265842400786:role/costanza-gha",
+    "executionRoleArn": "arn:aws:iam::265842400786:role/costanza-gha",
+    "taskRoleArn": "arn:aws:iam::265842400786:role/costanza-task",
     "containerDefinitions": [
         {
             "name": "costanza-api-service",
