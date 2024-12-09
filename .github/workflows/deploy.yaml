@@ -49,7 +49,6 @@ jobs:
         REPOSITORY_URI: 265842400786.dkr.ecr.us-east-1.amazonaws.com/costanza-fast-api-backend
         IMAGE_TAG: latest
       run: |
-        aws lambda update-function-configuration --function-name arn:aws:lambda:us-east-1:265842400786:function:costanza-api \
-          --package-type Image --region us-east-1
+        aws lambda update-function-configuration --function-name arn:aws:lambda:us-east-1:265842400786:function:costanza-api --region us-east-1
         aws lambda update-function-code --function-name arn:aws:lambda:us-east-1:265842400786:function:costanza-api \
           --image-uri $REPOSITORY_URI:$IMAGE_TAG --region us-east-1
