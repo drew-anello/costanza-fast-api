@@ -18,7 +18,7 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v3
       with:
-        role-to-assume: arn:aws:iam::265842400786:role/costanza-gha      
+        role-to-assume:  ${{ secrets.ROLE_TO_ASSUME }}      
         aws-region: us-east-1 
         
     - name: Log in to Amazon ECR
@@ -42,7 +42,7 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v3
       with:
-        role-to-assume: arn:aws:iam::265842400786:role/costanza-gha      
+        role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
         aws-region: us-east-1
 
     - name: Update Lambda Function Configuration
