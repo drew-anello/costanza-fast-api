@@ -45,20 +45,10 @@ jobs:
         role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
         aws-region: us-east-1
 
-    - name: Deploy to ECS
-      env:
-        CLUSTER_NAME: costanza-api
-        SERVICE_NAME: costanza-api-service
-        TASK_DEFINITION: costanza-task-def
-        IMAGE_URI: 265842400786.dkr.ecr.us-east-1.amazonaws.com/costanza-fast-api-backend:latest
-      run: |
-        # Update the task definition with the new image
-        TASK_DEFINITION_JSON=$(aws ecs describe-task-definition --task-definition $TASK_DEFINITION)
-        NEW_TASK_DEFINITION_JSON=$(echo $TASK_DEFINITION_JSON | jq --arg IMAGE_URI "$IMAGE_URI" '.taskDefinition.containerDefinitions[0].image = $IMAGE_URI')
-        NEW_TASK_DEFINITION=$(echo $NEW_TASK_DEFINITION_JSON | jq '.taskDefinition | {family: .family, containerDefinitions: .containerDefinitions, executionRoleArn: .executionRoleArn, taskRoleArn: .taskRoleArn, networkMode: .networkMode, requiresCompatibilities: .requiresCompatibilities, cpu: .cpu, memory: .memory}')
-        
-        # Register the new task definition
-        aws ecs register-task-definition --cli-input-json "$NEW_TASK_DEFINITION"
-        
-        # Update the ECS service to use the new task definition
-        aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment
+    - name: Deploy to Amazon ECS
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+      with:
+          task-definition: task-definition.json
+          service: costanza-api-service
+          cluster: costanza-api
+          wait-for-service-stability: true
