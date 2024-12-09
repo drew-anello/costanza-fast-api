@@ -51,7 +51,7 @@ jobs:
     - name: Deploy to Amazon ECS
       uses: aws-actions/amazon-ecs-deploy-task-definition@v2
       with:
-          task-definition: task-def.json
-          service: costanza-api-service
-          cluster: costanza-api
-          wait-for-service-stability: true
+        task-definition: task-def.json
+        service: costanza-api-service
+        cluster: costanza-api
+        wait-for-service-stability: true
