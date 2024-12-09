@@ -7,7 +7,7 @@ ZIP_FILE="costanza_lambda.zip"
 rm -f $ZIP_FILE
 
 # Zip the FastAPI project files
-zip -r $ZIP_FILE main.py models.py database.py requirements.txt
+zip -r $ZIP_FILE main.py models.py database.py requirements.txt Dockerfile
 
 # Print a message indicating the zip file has been created
 echo "Created $ZIP_FILE for deployment."
