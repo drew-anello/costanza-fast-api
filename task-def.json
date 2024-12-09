@@ -4,7 +4,7 @@
     "containerDefinitions": [
         {
             "name": "costanza-api-service",
-            "image": "your-docker-image-url",
+            "image": "265842400786.dkr.ecr.us-east-1.amazonaws.com/costanza-fast-api-backend:latest",
             "portMappings": [
                 {
                     "containerPort": 80,
