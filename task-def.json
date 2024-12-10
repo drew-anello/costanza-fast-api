@@ -2,7 +2,7 @@
     "family": "costanza-task-def",
     "networkMode": "awsvpc",
     "executionRoleArn": "arn:aws:iam::265842400786:role/costanza-execution",
-    "taskRoleArn": "arn:aws:iam::265842400786:role/costanza-task",
+    "taskRoleArn": "arn:aws:iam::265842400786:role/costanza-execution",
     "containerDefinitions": [
         {
             "name": "costanza-api-service",
@@ -26,6 +26,12 @@
     "requiresCompatibilities": [
         "FARGATE"
     ],
-    "cpu": "256",
-    "memory": "1024"
+    "volumes": [],
+    "placementConstraints": [],
+    "cpu": "2048",
+    "memory": "4096",
+    "runtimePlatform": {
+        "cpuArchitecture": "ARM64",
+        "operatingSystemFamily": "LINUX"
+    }
 }
